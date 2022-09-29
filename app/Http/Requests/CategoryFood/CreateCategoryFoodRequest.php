@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\CategoryFood;
 
+use App\Enums\ImageDir;
 use App\Http\Requests\BaseRequest;
 
 class CreateCategoryFoodRequest extends BaseRequest
@@ -24,17 +25,17 @@ class CreateCategoryFoodRequest extends BaseRequest
     {
         $data = parent::validated();
         $data['user_id'] = auth()->user()->id;
-        $data['image'] = $this->handleFileAndGetDir(data_get($data, 'image'), '\image\category_food');
+        $data['image'] = $this->handleFileAndGetDir(data_get($data, 'image'), ImageDir::IMAGE_CATEGORY_FOOD);
         return $data;
     }
 
-    public function handleFileAndGetDir($fileImg, $path = '\image'): string
+    public function handleFileAndGetDir($fileImg, $path = ImageDir::IMAGE): string
     {
         $filename = $fileImg->getClientOriginalName();
         if (!file_exists(public_path($path) . $filename)) {
             $fileImg->move(public_path($path), $filename);
         }
 
-        return $path . '\\'.$filename;
+        return $path . '\\' . $filename;
     }
 }
