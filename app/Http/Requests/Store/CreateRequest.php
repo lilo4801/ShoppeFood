@@ -4,6 +4,7 @@ namespace App\Http\Requests\Store;
 
 use App\Enums\ImageDir;
 use App\Http\Requests\BaseRequest;
+use App\Models\Store;
 
 class CreateRequest extends BaseRequest
 {
@@ -25,6 +26,17 @@ class CreateRequest extends BaseRequest
         ];
     }
 
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator): void {
+
+            if ($this->isExist()) {
+                $validator->errors()->add('user_id', 'User only create one Store');
+            }
+
+        });
+    }
+
     public function validated()
     {
         $data = parent::validated();
@@ -33,4 +45,10 @@ class CreateRequest extends BaseRequest
 
         return $data;
     }
+
+    public function isExist()
+    {
+        return Store::where('user_id', auth()->user()->id)->exists();
+    }
+
 }
