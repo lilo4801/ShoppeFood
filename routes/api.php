@@ -29,6 +29,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/category-foods', FetchCategoryFoods::class);
     Route::put('/category-food/update/{id}', UpdateController::class)->where('id', '[0-9]+');
     Route::delete('/category-food/{id}', RemoveController::class)->where('id', '[0-9]+');
-    Route::get('/foods', [CreateController::class, 'index']);
+    Route::post('/foods/create', CreateController::class);
+    Route::get('/foods/store/{id}', \App\Http\Controllers\API\Food\FetchFoodStoreController::class);
 
 });

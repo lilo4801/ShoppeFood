@@ -14,6 +14,7 @@ final class ImageDir extends Enum
     const IMAGE = '\image';
     const IMAGE_CATEGORY_FOOD = '\image\category';
     const IMAGE_STORE_FOOD = '\image\store';
+    const IMAGE_FOOD = '\image\foods';
 
 
 }
