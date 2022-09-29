@@ -7,6 +7,7 @@ use \App\Http\Controllers\API\Auth\RegisterController;
 use \App\Http\Controllers\API\Auth\LoginController;
 use \App\Http\Controllers\API\Auth\LogoutController;
 use \App\Http\Controllers\API\CategoryFood\FetchCategoryFoods;
+use \App\Http\Controllers\API\CategoryFood\RemoveController;
 
 /*
 |--------------------------------------------------------------------------
@@ -24,6 +25,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', LogoutController::class);
     Route::post('/category-food/create', CreateCategoryFoodController::class);
     Route::get('/category-foods', FetchCategoryFoods::class);
+    Route::delete('/category-food/{id}', RemoveController::class)->where('id', '[0-9]+');
     Route::get('/foods', [CreateController::class, 'index']);
 
 });
