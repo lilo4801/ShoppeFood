@@ -1,10 +1,14 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\API\CategoryFood\CreateController as CreateCategoryFoodController;
 use \App\Http\Controllers\API\Food\CreateController;
 use \App\Http\Controllers\API\Auth\RegisterController;
 use \App\Http\Controllers\API\Auth\LoginController;
 use \App\Http\Controllers\API\Auth\LogoutController;
+use \App\Http\Controllers\API\CategoryFood\FetchCategoryFoods;
+use \App\Http\Controllers\API\CategoryFood\RemoveController;
+use \App\Http\Controllers\API\CategoryFood\UpdateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +24,10 @@ Route::post('register', RegisterController::class);
 Route::post('login', LoginController::class);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', LogoutController::class);
+    Route::post('/category-food/create', CreateCategoryFoodController::class);
+    Route::get('/category-foods', FetchCategoryFoods::class);
+    Route::put('/category-food/update/{id}', UpdateController::class)->where('id', '[0-9]+');
+    Route::delete('/category-food/{id}', RemoveController::class)->where('id', '[0-9]+');
     Route::get('/foods', [CreateController::class, 'index']);
 
 });
