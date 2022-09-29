@@ -24,6 +24,7 @@ Route::post('register', RegisterController::class);
 Route::post('login', LoginController::class);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', LogoutController::class);
+    Route::post('/store/create', \App\Http\Controllers\API\Store\CreateController::class);
     Route::post('/category-food/create', CreateCategoryFoodController::class);
     Route::get('/category-foods', FetchCategoryFoods::class);
     Route::put('/category-food/update/{id}', UpdateController::class)->where('id', '[0-9]+');

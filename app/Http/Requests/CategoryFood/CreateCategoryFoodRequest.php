@@ -29,13 +29,4 @@ class CreateCategoryFoodRequest extends BaseRequest
         return $data;
     }
 
-    public function handleFileAndGetDir($fileImg, $path = ImageDir::IMAGE): string
-    {
-        $filename = $fileImg->getClientOriginalName();
-        if (!file_exists(public_path($path) . $filename)) {
-            $fileImg->move(public_path($path), $filename);
-        }
-
-        return $path . '\\' . $filename;
-    }
 }
