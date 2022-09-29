@@ -1,10 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\API\CategoryFood\CreateController as CreateCategoryFoodController;
 use \App\Http\Controllers\API\Food\CreateController;
 use \App\Http\Controllers\API\Auth\RegisterController;
 use \App\Http\Controllers\API\Auth\LoginController;
 use \App\Http\Controllers\API\Auth\LogoutController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +22,7 @@ Route::post('register', RegisterController::class);
 Route::post('login', LoginController::class);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('logout', LogoutController::class);
+    Route::post('/category-food/create', CreateCategoryFoodController::class);
     Route::get('/foods', [CreateController::class, 'index']);
 
 });
