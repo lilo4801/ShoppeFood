@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Enums\ImageDir;
 use Illuminate\Foundation\Http\FormRequest;
 
 class BaseRequest extends FormRequest
@@ -26,5 +27,15 @@ class BaseRequest extends FormRequest
         return [
             //
         ];
+    }
+
+    public function handleFileAndGetDir($fileImg, $path = ImageDir::IMAGE): string
+    {
+        $filename = $fileImg->getClientOriginalName();
+        if (!file_exists(public_path($path) . $filename)) {
+            $fileImg->move(public_path($path), $filename);
+        }
+
+        return $path . '\\' . $filename;
     }
 }

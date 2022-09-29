@@ -3,10 +3,10 @@
 namespace App\Http\Requests\CategoryFood;
 
 use App\Enums\ImageDir;
+use App\Http\Requests\BaseRequest;
 use App\Models\CategoryFood;
-use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateCategoryFoodRequest extends FormRequest
+class UpdateCategoryFoodRequest extends BaseRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -44,13 +44,4 @@ class UpdateCategoryFoodRequest extends FormRequest
         return $data;
     }
 
-    public function handleFileAndGetDir($fileImg, $path = ImageDir::IMAGE): string
-    {
-        $filename = $fileImg->getClientOriginalName();
-        if (!file_exists(public_path($path) . $filename)) {
-            $fileImg->move(public_path($path), $filename);
-        }
-
-        return $path . '\\' . $filename;
-    }
 }
