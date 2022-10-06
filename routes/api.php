@@ -30,6 +30,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::put('/category-food/update/{id}', UpdateController::class)->where('id', '[0-9]+');
     Route::delete('/category-food/{id}', RemoveController::class)->where('id', '[0-9]+');
     Route::post('/foods/create', CreateController::class);
+    Route::post('/foods/update/{id}', \App\Http\Controllers\API\Food\UpdateController::class)->where('id', '[0-9]+');
     Route::get('/foods/store/{id}', \App\Http\Controllers\API\Food\FetchFoodStoreController::class)->where('id', '[0-9]+');
-
+    Route::get('/food/{id}', \App\Http\Controllers\API\Food\FetchDetailController::class)->where('id', '[0-9]+');
 });

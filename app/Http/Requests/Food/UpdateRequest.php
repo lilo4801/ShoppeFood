@@ -4,18 +4,19 @@ namespace App\Http\Requests\Food;
 
 use App\Enums\ImageDir;
 use App\Http\Requests\BaseRequest;
-use App\Models\Store;
+use App\Models\Food;
 
-class CreateRequest extends BaseRequest
+class UpdateRequest extends BaseRequest
 {
-
-
+    /**
+     * Determine if the user is authorized to make this request.
+     *
+     * @return bool
+     */
     public function authorize()
     {
-        $params = $this->all();
-        $store = Store::find($params['store_id']);
-
-        return $store && $store->user_id === auth()->user()->id;
+        $food = Food::find($this->route('id'));
+        return $food && $food->user_id === auth()->user()->id;
     }
 
     /**
@@ -26,24 +27,26 @@ class CreateRequest extends BaseRequest
     public function rules()
     {
         return [
-            'title' => 'required|string|unique:foods',
-            'content' => 'required|string',
-            'unitPrice' => 'required|numeric',
-            'quantity' => 'required|numeric',
+            'title' => 'string',
+            'content' => 'string',
+            'unitPrice' => 'numeric',
+            'quantity' => 'numeric',
             'category_food_id' => 'integer',
             'store_id' => 'integer',
-            'images' => 'required',
-            'images.*' => 'mimes:jpeg,jpg,png,gif|required'
+            'del_image_id.*' => 'integer',
+            'images.*' => 'mimes:jpeg,jpg,png,gif',
         ];
     }
 
-    public function validated()
+    public function validated(): array
     {
         $data = parent::validated();
 
         $data['images'] = array_map(function ($image) {
             return $this->handleFileAndGetDir($image, ImageDir::IMAGE_FOOD);
         }, data_get($data, 'images', []));
+
+        $data['food_id'] = $this->route('id');
 
         return $data;
     }
