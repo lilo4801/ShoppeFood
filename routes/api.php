@@ -33,4 +33,12 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/foods/update/{id}', \App\Http\Controllers\API\Food\UpdateController::class)->where('id', '[0-9]+');
     Route::get('/foods/store/{id}', \App\Http\Controllers\API\Food\FetchFoodStoreController::class)->where('id', '[0-9]+');
     Route::get('/food/{id}', \App\Http\Controllers\API\Food\FetchDetailController::class)->where('id', '[0-9]+');
+
+
+    Route::delete('/extra-foods/{food_id}', \App\Http\Controllers\API\ExtraFood\DeleteExtraFoodController::class)->where('food_id', '[0-9+]');
+    Route::post('/extra-foods/create', \App\Http\Controllers\API\ExtraFood\CreateController::class);
+    Route::get('/extra-foods/restore/{food_id}', \App\Http\Controllers\API\ExtraFood\RestoreExtraFoodController::class)->where('food_id', '[0-9+]');
+    Route::post('/extra-foods/update/{food_id}', \App\Http\Controllers\API\ExtraFood\UpdateController::class)->where('food_id', '[0-9+]');
+    Route::get('/extra-foods/{food_id}', \App\Http\Controllers\API\ExtraFood\FetchExtraFoodController::class)->where('food_id', '[0-9+]');
+
 });
